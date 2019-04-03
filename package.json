@@ -1,0 +1,26 @@
+{
+  "name": "syzzo",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "SECRET=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhZG1pbiI6dHJ1ZSwiaWF0IjoxNTUzMzk4NDI2LCJleHAiOjE1NTM0ODQ4MjZ9.bc59lqKw19cyLFxjc5GyDWnG4XdsHSMsjauoGHvlsDQ nodemon app.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@google-cloud/datastore": "^3.1.2",
+    "@google-cloud/storage": "^2.4.3",
+    "body-parser": "^1.18.3",
+    "express": "^4.16.4",
+    "express-session": "^1.15.6",
+    "google-auth-library": "^3.1.1",
+    "helmet": "^3.16.0",
+    "jsonwebtoken": "^8.5.1",
+    "uuid": "^3.3.2"
+  },
+  "devDependencies": {
+    "nodemon": "^1.18.10"
+  }
+}
