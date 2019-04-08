@@ -1,68 +1,25 @@
 const express = require('express');
-//const mongoose = require('mongoose');
+const mongoose = require('mongoose');
 const helmet = require('helmet');
 const bodyParser = require('body-parser');
 const session = require('express-session');
 const uuid = require('uuid/v4');
 
 
-const {OAuth2Client} = require('google-auth-library');
-const {Storage} = require('@google-cloud/storage');
-const {Datastore} = require('@google-cloud/datastore');
- 
-const projectId = 'elite-striker-235712';
- const storage = new Storage({
-  projectId: projectId,
-});
- 
-// The name for the new bucket
-
-
-
-async function addUser(id) {
-  // Your Google Cloud Platform project ID
- 
-  // Creates a client
-  const datastore = new Datastore({
-    projectId: projectId,
-  });
- 
-  // The kind for the new entity
-  const kind = 'User';
-  // The name/ID for the new entity
-  const name = 'user1';
-  // The Cloud Datastore key for the new entity
-  const taskKey = datastore.key([kind, name]);
- 
-  // Prepares the new entity
-  const task = {
-    key: taskKey,
-    data: {
-      description: id,
-    },
-  };
- 
-  // Saves the entity
-  await datastore.save(task);
-  console.log(`Saved ${task.key.name}: ${task.data.description}`);
-}
 
 
 
 
 
-
-
-
-
-//const Schema = mongoose.Schema;
+const Schema = mongoose.Schema;
 const port = 3000;
 const app = express();
-const CLIENT_ID = '380819953719-80i33k9lm1i5iu893rpqcgu2kl0mma5a.apps.googleusercontent.com';
+
 
 
 var jwt    = require('jsonwebtoken'); // used to create, sign, and verify tokens
 var config = require('./config'); // get our config file
+var path = require('path');
 //var User   = require('./models/user'); // get our mongoose model
 
 
@@ -77,16 +34,11 @@ app.use(bodyParser.urlencoded({ extended: false }));
 
 
 
-//Schemas for various objects...
 
 
-//Models
-
-//var salon = mongoose.model('salon', salonSchema);
-//var user = mongoose.model('user', userSchema);
-//var worker = mongoose.model('worker', workerSchema);
-
-
+app.get('/', function(req, res) {
+    res.sendFile(path.join(__dirname + '/makeDatabase/registerAgent.html'));
+});
 
 
 
@@ -95,9 +47,6 @@ app.use(bodyParser.urlencoded({ extended: false }));
 
 
 app.get('/datastore', function(req, res){
-
-	quickStart();
-
 
 
   res.send('hello world');
@@ -143,27 +92,30 @@ app.get('/api/abc/ds', function(req,res) {
 });
 
 
-app.post('/reg', function(req,res) {
-const client = new OAuth2Client(CLIENT_ID);
-var p = JSON.parse(req.body.PostData);
+app.post('/login/user', function(req,res) {
+	var PostData = JSON.parse(req.body.PostData)
+	console.log(typeof PostData);
+	console.log(PostData.number);
 
-async function verify() {
-  const ticket = await client.verifyIdToken({
-      idToken: p.idToken,
-      audience: CLIENT_ID,  // Specify the CLIENT_ID of the app that accesses the backend
-      // Or, if multiple clients access the backend:
-      //[CLIENT_ID_1, CLIENT_ID_2, CLIENT_ID_3]
-  });
-  const payload = ticket.getPayload();
-  const userid = payload['sub'];
- 	console.log(typeof payload);
- 	console.log(payload);
- 	addUser(payload['email']);
-  // If request specified a G Suite domain:
-  //const domain = payload['hd'];
-}
-verify().catch(console.error);
+	res.send(req.body);
+
+
 });
+
+app.post('/login/worker', function(req,res) {
+
+	res.send("Worker Login")
+
+
+});
+
+app.post('/login/manager', function(req,res) {
+
+	res.send("Manager Login")
+
+
+});
+
 
 
 
