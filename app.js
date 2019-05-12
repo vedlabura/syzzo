@@ -294,6 +294,14 @@ app.get('/admin/listEmployee', function(req, res) {
     res.sendFile(path.join(__dirname + '/html/listEmployee.html'));
 });
 
+app.get('/admin/listStylist', function(req, res) {
+    res.sendFile(path.join(__dirname + '/html/listStylists.html'));
+});
+
+app.get('/admin/listSalon', function(req, res) {
+    res.sendFile(path.join(__dirname + '/html/listSalons.html'));
+});
+
 
 app.get('/admin/registerEmployee', function(req, res) {
     res.sendFile(path.join(__dirname + '/html/registerEmployee.html'));
@@ -432,14 +440,41 @@ app.post('/admin/registerSalon', salonUpload, function(req, res) {
 app.post('/admin/listEmployee', function(req, res) {
 		if(req.body.key ==KEY){
 			employeeModel.find().lean().exec(function (err, users) {
-				console.log(typeof users);
-				console.log(users.length);
-				console.log(typeof users.length);
+				// console.log(typeof users);
+				// console.log(users.length);
+				// console.log(typeof users.length);
     		    res.send(users);
             });
 		}
 		else res.send("Invalid key")
 });
+
+
+app.post('/admin/listStylist', function(req, res) {
+		if(req.body.key ==KEY){
+			stylistModel.find().lean().exec(function (err, users) {
+				// console.log(typeof users);
+				// console.log(users.length);
+				// console.log(typeof users.length);
+    		    res.send(users);
+            });
+		}
+		else res.send("Invalid key")
+});
+
+
+app.post('/admin/listSalon', function(req, res) {
+		if(req.body.key ==KEY){
+			salonModel.find().lean().exec(function (err, users) {
+				// console.log(typeof users);
+				// console.log(users.length);
+				// console.log(typeof users.length);
+    		    res.send(users);
+            });
+		}
+		else res.send("Invalid key")
+});
+
 
 
 
