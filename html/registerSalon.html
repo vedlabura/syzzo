@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <script type='text/javascript'>
+
+var ct = 1;
+var dt =1;
+function new_stylist()
+{
+	ct++;
+	var div1 = document.createElement('div');
+	div1.id = ct;
+	// link to delete extended form elements
+	var delLink = '<div style="text-align:right;margin-right:6px"><a href="javascript:deleteStylist('+ ct +')">Del</a></div>';
+	div1.innerHTML = document.getElementById('newStylistTemplate').innerHTML + delLink;
+	document.getElementById('salonstylist').appendChild(div1);
+}
+
+function new_service()
+{
+	dt++;
+	var div2 = document.createElement('div');
+	div2.id = dt;
+	// link to delete extended form elements
+	var delLink = '<div style="text-align:right;margin-right:6px"><a href="javascript:deleteService('+ dt +')">Del</a></div>';
+	div2.innerHTML = document.getElementById('newServiceTemplate').innerHTML + delLink;
+	document.getElementById('servicelist').appendChild(div2);
+}
+// function to delete the newly added set of elements
+function deleteStylist(eleId)
+{
+	d = document;
+	var ele = d.getElementById(eleId);
+	var parentEle = d.getElementById('salonstylist');
+	parentEle.removeChild(ele);
+}
+function deleteService(eleId)
+{
+	d = document;
+	var ele = d.getElementById(eleId);
+	var parentEle = d.getElementById('servicelist');
+	parentEle.removeChild(ele);
+}
+</script>
+
+   
+</head>
+<body bgcolor="#afeeee">
+   <style>
+   #newlink {width:600px}
+</style>
+<form method="post" action="/admin/registerSalon" enctype="multipart/form-data">
+<div>
+<h3>Salon Details</h3>
+<table border=0>
+	<tr>
+		<td>Name: </td>
+		<td> <input type="text" name="salonName" required="true"> </td>
+	</tr>
+	<tr>
+		<td> PhoneNo: </td>
+		<td> <input type="number" name="salonPhoneNo" required="true"> </td>
+	</tr>
+	<tr>
+		<td> Address: </td>
+		<td>  <textarea name="address" cols="50" rows="5" required="true"></textarea> </td>
+	</tr>
+	<tr>
+		<td> Longitude: </td>
+		<td> <input type="text" name="longitude" required="true"> </td>
+	</tr>
+	<tr>
+		<td> Latitude: </td>
+		<td> <input type="text" name="latitude" required="true"> </td>
+	</tr>
+	<tr>
+		<td> number of stylists: </td>
+		<td> <input type="number" name="numberOfStylists" required="true"> </td>
+	</tr>
+	<tr>
+		<td> Photo: </td>
+		<td> <input type="file" name="salonPhoto" required="true"> </td>
+	</tr>
+</table>
+</div>
+<h3>Salon Details</h3>
+<div id="salonstylist">
+<div>
+<table border=0>
+	<tr>
+		<td> Name of stylist: </td>
+		<td> <input type="text" name="stylistName" required="true"> </td>
+	</tr>
+	<tr>
+		<td> Phone No: </td>
+		<td> <input type="number" name="stylistPhoneNo" required="true"> </td>
+	</tr>
+	<tr>
+		<td> Photo: </td>
+		<td> <input type="file" name="stylistPhoto" required="true"> </td>
+	</tr>
+</table>
+</div>
+</div>
+<p id="addnew">
+	<a href="javascript:new_stylist()">Add New Stylist </a>
+</p>
+<br>
+<h3>Service details</h3>
+<div id="servicelist">
+<div>
+<table border=0>
+	<tr>
+		<td> Service Name: </td>
+		<td> <input type="text" name="serviceName" required="true"> </td>
+	</tr>
+	<tr>
+		<td> Description: </td>
+		<td>  <textarea name="description" cols="50" rows="5" ></textarea> </td>
+	</tr>
+	<tr>
+		<td> Price: </td>
+		<td> <input type="number" name="servicePrice" required="true"> </td>
+	</tr>
+</table>
+</div>
+</div>
+<p id="addnew">
+	<a href="javascript:new_service()">Add New Service </a>
+</p>
+<table border=0>
+	<tr>
+		<td> Agent Key: </td>
+		<td> <input type="text" name="agentKey" required="true"> </td>
+	</tr>
+</table>
+<p>
+		<br>
+		<input type="submit" name="submit1" value="Register Salon">
+		<input type="reset" name="reset1">
+	</p>
+
+	
+</form>
+<!-- Template -->
+<div id="newStylistTemplate" style="display:none">
+<div>
+<table border=0>
+	<tr>
+		<td> Name of stylist: </td>
+		<td> <input type="text" name="stylistName" required="true"> </td>
+	</tr>
+	<tr>
+		<td> Phone No: </td>
+		<td> <input type="number" name="stylistPhoneNo" required="true"> </td>
+	</tr>
+	<tr>
+		<td> Photo: </td>
+		<td> <input type="file" name="stylistPhoto" required="true"> </td>
+	</tr>
+</table>
+</div>
+</div>
+<!-- Service Template-->
+<div id="newServiceTemplate" style="display:none">
+<div>
+<table border=0>
+	<tr>
+		<td> Service Name: </td>
+		<td> <input type="text" name="serviceName" required="true"> </td>
+	</tr>
+	<tr>
+		<td> Description: </td>
+		<td>  <textarea name="description" cols="50" rows="5" ></textarea> </td>
+	</tr>
+	<tr>
+		<td> Price: </td>
+		<td> <input type="number" name="servicePrice" required="true"> </td>
+	</tr>
+</table>
+</div>
+</div>
+
+</body>
+</html>

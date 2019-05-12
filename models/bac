@@ -1,0 +1,239 @@
+const express = require('express');
+const mongoose = require('mongoose');
+const helmet = require('helmet');
+const bodyParser = require('body-parser');
+const session = require('express-session');
+const uuid = require('uuid/v4');
+
+
+var multer = require('multer');
+var upload = multer();
+
+
+
+
+
+
+
+const Schema = mongoose.Schema;
+const port = 7000;
+const app = express();
+const key = "key123";
+
+
+
+var config = require('./config'); // get our config file
+var path = require('path');
+
+const employeeModel = require("./models/employee.js");
+
+mongoose.connect('mongodb://me:itsme@localhost:27017/sample', {useNewUrlParser: true});
+
+var val = 1;
+
+
+
+ 
+
+
+
+
+
+
+
+
+
+
+
+app.use(helmet());
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json())
+app.use(upload.array()); 
+
+
+
+
+
+
+app.get('/test', function(req, res) {
+	var uiid = uuid();
+	console.log(typeof uiid)
+    res.send(uiid);
+    console.log(val)
+    val= val+1;
+});
+
+
+
+app.get('/', function(req, res) {
+    res.sendFile(path.join(__dirname + '/makeDatabase/homePage.html'));
+});
+
+
+app.get('/admin/listEmployee', function(req, res) {
+    res.sendFile(path.join(__dirname + '/makeDatabase/listEmployee.html'));
+});
+
+
+app.get('/admin/registerEmployee', function(req, res) {
+    res.sendFile(path.join(__dirname + '/makeDatabase/registerEmployee.html'));
+});
+
+
+app.get('/admin/deleteEmployee', function(req, res) {
+    res.sendFile(path.join(__dirname + '/makeDatabase/deleteEmployee.html'));
+});
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+app.post('/admin/registerEmployee', function(req, res) {
+	var emp = req.body;
+	if(emp.key !=key){
+		res.send("Invalid key");
+	}
+	else{
+		mongoose.connect('mongodb://me:itsme@localhost:27017/sample', {useNewUrlParser: true});
+
+
+		var db = mongoose.connection;
+ 
+		db.on('error', console.error.bind(console, 'connection error:'));
+ 
+		db.once('open', function() {
+    		console.log("Connection Successful!");
+    
+    	// define Schema
+    	var password =uuid();
+    	employeeModel.find().lean().exec(function (err, employees) {
+			password = password + "syzzo-" +(employees.length+1);
+			   	var employee = new employeeModel({ name: emp.name, phoneNo: emp.phoneNo , agentKey: password , salonsAquired : 0 , employeeNo : employees.length +1});
+ 
+    	// save model to database
+    	employee.save(function (err, employee1) {
+      		if (err) {
+      			mongoose.connection.close();
+      			return console.error(err);
+      		}
+      		mongoose.connection.close();
+      		res.send("Added successfully!")
+      		
+    	});
+
+            });
+
+ 
+    	// a document instance
+ 
+    
+	}); 	
+
+	}
+});
+
+
+
+app.post('/admin/listEmployee', function(req, res) {
+		if(req.body.key ==key){
+			mongoose.connect('mongodb://me:itsme@localhost:27017/sample', {useNewUrlParser: true});
+			employeeModel.find().lean().exec(function (err, users) {
+				mongoose.connection.close();
+				console.log(typeof users);
+				console.log(users.length);
+				console.log(typeof users.length);
+    		    res.send(users);
+            });
+		}
+		else res.send("Invalid key")
+});
+
+
+
+app.post("/admin/deleteEmployee", function(req, res) {
+
+	if(key==req.body.key){
+		mongoose.connect('mongodb://me:itsme@localhost:27017/sample', {useNewUrlParser: true});
+    	employeeModel.findByIdAndDelete(req.body.id, (error, data)=>{
+        	if(error){
+        		mongoose.connection.close();
+            	console.log("error in deleting yo!");
+            	throw error;
+            }
+        	 else {
+        	 	mongoose.connection.close();
+            	console.log("data all gone and deleted yo");
+            	res.send("Done");
+
+        	}
+        });
+    }
+    else res.send("Invalid key");
+});
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+app.post('/login/user', function(req,res) {
+	var PostData = JSON.parse(req.body.PostData)
+	console.log(typeof PostData);
+	console.log(PostData.number);
+
+	res.send(req.body);
+
+
+});
+
+app.post('/login/worker', function(req,res) {
+
+	res.send("Worker Login")
+
+
+});
+
+app.post('/login/manager', function(req,res) {
+
+	res.send("Manager Login")
+
+
+});
+
+
+
+// function to get counter value
+
+
+
+
+
+
+
+app.listen(port);
+console.log("Server running at " + port)
+
