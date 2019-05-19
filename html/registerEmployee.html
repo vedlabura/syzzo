@@ -7,7 +7,7 @@
 <body bgcolor="#afeeee">
 <div id="contact">
     <h1>Register Employee</h1>
-    <form action="/admin/registerEmployee" method="post">
+    <form action="/admin/registerEmployee" method="post" enctype="multipart/form-data">
         <table border=0>
     <tr>
         <td>Name: </td>
@@ -17,6 +17,23 @@
         <td> PhoneNo: </td>
         <td> <input type="number" id="phoneNo" name="phoneNo" placeholder="Enter employee number"> </td>
     </tr>
+    <tr>
+        <td>Email: </td>
+        <td> <input type="text" id="name" name="email" placeholder="Enter employee email" > </td>
+    </tr>
+    <tr>
+        <td>Designation: </td>
+        <td> <input type="text" id="name" name="designation" placeholder="Enter employee Designation" > </td>
+    </tr>
+    <tr>
+        <td>Area of Supervision: </td>
+        <td> <input type="text" id="name" name="areaSupervision" placeholder="Enter employee area of Supervision" > </td>
+    </tr>
+    <tr>
+        <td>Photo: </td>
+        <td> <input type="file" id="name" name="employeePhoto"> </td>
+    </tr>
+
     <tr>
         <td> Key: </td>
         <td>  <textarea id="Key" name="key" placeholder="Enter secret key"></textarea> </td>

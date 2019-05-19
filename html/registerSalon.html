@@ -1,185 +1,1303 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <script type='text/javascript'>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css" integrity="sha384-oS3vJWv+0UjzBfQzYUhtDYW+Pj2yciDJxpsK1OYPAYjqT085Qq/1cq5FLXAZQ7Ay" crossorigin="anonymous">
 
-var ct = 1;
-var dt =1;
-function new_stylist()
-{
-	ct++;
-	var div1 = document.createElement('div');
-	div1.id = ct;
-	// link to delete extended form elements
-	var delLink = '<div style="text-align:right;margin-right:6px"><a href="javascript:deleteStylist('+ ct +')">Del</a></div>';
-	div1.innerHTML = document.getElementById('newStylistTemplate').innerHTML + delLink;
-	document.getElementById('salonstylist').appendChild(div1);
+
+<style type="text/css">
+
+
+html {
+    overflow: -moz-scrollbars-vertical; 
+    overflow-y: scroll;
 }
 
-function new_service()
-{
-	dt++;
-	var div2 = document.createElement('div');
-	div2.id = dt;
-	// link to delete extended form elements
-	var delLink = '<div style="text-align:right;margin-right:6px"><a href="javascript:deleteService('+ dt +')">Del</a></div>';
-	div2.innerHTML = document.getElementById('newServiceTemplate').innerHTML + delLink;
-	document.getElementById('servicelist').appendChild(div2);
+  body {
+  background: #f2f2f2;
+  font-size: 14px;
+  font-family: 'Open Sans', sans-serif;
+  line-height: 1;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  margin: 0px !important;
 }
-// function to delete the newly added set of elements
-function deleteStylist(eleId)
-{
-	d = document;
-	var ele = d.getElementById(eleId);
-	var parentEle = d.getElementById('salonstylist');
-	parentEle.removeChild(ele);
+.container1 {
+  display: block;
+  max-width: 480px;
+  min-width: 300px;
+  margin: 0 auto;
+  padding: 0 40px;
+  margin-bottom: 30px;
 }
-function deleteService(eleId)
-{
-	d = document;
-	var ele = d.getElementById(eleId);
-	var parentEle = d.getElementById('servicelist');
-	parentEle.removeChild(ele);
+.modal {
+  background: #FFF;
+  -webkit-border-radius: 3px;
+  -webkit-background-clip: padding-box;
+  -moz-border-radius: 3px;
+  -moz-background-clip: padding;
+  border-radius: 3px;
+  background-clip: padding-box;
+  overflow: hidden;
 }
-</script>
+.modal .form .form-row {
+  display: -webkit-box;
+  display: -moz-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-direction: normal;
+  -moz-box-direction: normal;
+  -webkit-box-orient: horizontal;
+  -moz-box-orient: horizontal;
+  -webkit-flex-direction: row;
+  -ms-flex-direction: row;
+  flex-direction: row;
+  margin: 0 0 30px;
+}
 
-   
-</head>
-<body bgcolor="#afeeee">
-   <style>
-   #newlink {width:600px}
+.modal .form .input-group {
+  width: 100%;
+}
+.modal .form label {
+  display: block;
+  width: 100%;
+  margin: 0 0 10px;
+  color: #00A6EA;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+.modal .form input {
+  outline: none;
+  display: block;
+  background: rgba(0, 0, 0, 0.1);
+  width: 100%;
+  margin: 0;
+  border: 0;
+  -webkit-border-radius: 3px;
+  -webkit-background-clip: padding-box;
+  -moz-border-radius: 3px;
+  -moz-background-clip: padding;
+  border-radius: 3px;
+  background-clip: padding-box;
+  padding: 15px;
+  color: #999;
+  font-size: 12px;
+  font-weight: 700;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+}
+.modal .header {
+  background: #00A6EA;
+  padding: 30px;
+  text-align: center;
+}
+.modal .header h1 {
+  margin: 0 0 15px;
+  color: #FFF;
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+.modal .header .card-type {
+  display: -webkit-box;
+  display: -moz-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-direction: normal;
+  -moz-box-direction: normal;
+  -webkit-box-orient: horizontal;
+  -moz-box-orient: horizontal;
+  -webkit-flex-direction: row;
+  -ms-flex-direction: row;
+  flex-direction: row;
+  -webkit-flex-wrap: wrap;
+  -ms-flex-wrap: wrap;
+  flex-wrap: wrap;
+}
+.modal .header .card-type .card {
+  position: relative;
+  width: 33.333%;
+  min-width: 54px;
+  text-align: center;
+  -webkit-transition: 0.3s ease;
+  -moz-transition: 0.3s ease;
+  -o-transition: 0.3s ease;
+  transition: 0.3s ease;
+  -webkit-filter: grayscale(100%);
+  -moz-filter: grayscale(100%);
+  -ms-filter: grayscale(100%);
+  filter: grayscale(100%);
+   opacity: 0.8;
+}
+
+.modal .form textarea{    outline: none;
+    display: block;
+    background: rgba(0, 0, 0, 0.1);
+    width: 100%;
+    margin: 0;
+    border: 0;
+    -webkit-border-radius: 3px;
+    -webkit-background-clip: padding-box;
+    -moz-border-radius: 3px;
+    -moz-background-clip: padding;
+    border-radius: 3px;
+    background-clip: padding-box;
+    padding: 15px;
+    color: #999;
+    font-size: 12px;
+    font-weight: 700;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;min-height: 120px;}
+
+.modal .header .card-type .card.active {
+  -webkit-filter: grayscale(0);
+  -moz-filter: grayscale(0);
+  -ms-filter: grayscale(0);
+  filter: grayscale(0);
+  opacity: 1;
+
+}
+.modal .header .card-type .card.active:after {
+  display: block;
+  bottom: -30px;
+}
+.modal .header .card-type .card:after {
+  content: '';
+  position: absolute;
+  bottom: -60px;
+  left: 50%;
+  margin: 0 0 0 -10px;
+  border-right: 10px solid transparent;
+  border-left: 10px solid transparent;
+  border-bottom: 10px solid #FFF;
+  -webkit-transition: 0.3s ease;
+  -moz-transition: 0.3s ease;
+  -o-transition: 0.3s ease;
+  transition: 0.3s ease;
+}
+.modal .header .card-type .card img {
+  display: inline-block;
+}
+.modal .header .card-type li {
+  display: inline-block;
+  margin: 0 10px;
+}
+.modal .content {
+  padding: 30px;
+}
+.modal .footer .button {
+  outline: none;
+  display: block;
+  background: #E39C14;
+  width: 100%;
+  border: 0;
+  padding: 20px 30px;
+  color: #FFF;
+  font-weight: 700;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  cursor: pointer;
+}
+.info {
+  width: 300px;
+  margin: 50px auto;
+  text-align: center;
+}
+.info h1 {
+  margin: 0 0 15px;
+  padding: 0;
+  font-size: 24px;
+  font-weight: 400;
+  color: #333;
+}
+.info span {
+  color: #666;
+  font-size: 12px;
+}
+.info span a {
+  color: #000;
+  text-decoration: none;
+}
+.info span .fa {
+  color: #00A6EA;
+}
+lesshat-selector {
+  -lh-property: 0; } 
+@-webkit-keyframes active{ 0%{ bottom: -60px; opacity: 0; } 100%{ bottom: -30px; opacity: 1 }}
+@-moz-keyframes active{ 0%{ bottom: -60px; opacity: 0; } 100%{ bottom: -30px; opacity: 1 }}
+@-o-keyframes active{ 0%{ bottom: -60px; opacity: 0; } 100%{ bottom: -30px; opacity: 1 }}
+@keyframes active{ 0%{ bottom: -60px; opacity: 0; } 100%{ bottom: -30px; opacity: 1 }}
+[not-existing] {
+  zoom: 1;
+}
+
+a {
+    color: #4b35ef;
+    text-decoration: none;
+    background-color: transparent;
+}
+a:hover{
+    text-decoration: underline;
+}
+.btn-danger {
+    background-color: #d71149;
+    border-color: #d71149;
+}
+
+.card {
+    border: none;
+}
+
+a:hover,
+a:focus {
+    text-decoration: none;
+}
+b{
+    font-weight: 700;
+}
+.btn-group-lg>.btn,
+.btn-lg {
+    border-radius: none;
+}
+
+.pagecontainer__root {
+    display: flex;
+    flex-direction: column;
+    min-height: 20vh;
+}
+
+.container__header {
+    background-color: #fff;
+    box-shadow: 0 2px 4px 0 rgba(0, 0, 0, .1);
+    position: sticky;
+    top: 0;
+    z-index: 4;
+}
+
+.nav__appbar {
+    min-height: 4rem;
+    padding: .65rem 0;
+}
+
+.wrapper__header {
+    height: 100%;
+    z-index: 14;
+    align-items: center;
+    display: flex;
+}
+
+.content__container {
+    height: 100%;
+    max-width: calc(1440px + 12rem);
+}
+
+@media only screen and (min-width:75rem) {
+    .content__container {
+        padding-left: 6rem;
+        padding-right: 6rem;
+    }
+}
+
+.content__wrapper {
+    width: 100%;
+    margin: 0 auto;
+    align-items: center;
+    display: flex;
+}
+
+.section__content {
+    display: flex;
+    align-items: center;
+    height: 100%;
+    z-index: 1;
+
+}
+
+.section__left {
+    flex: 1 1;
+}
+
+.header__list {
+    display: flex;
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    align-items: center;
+}
+
+.tab__link {
+    color: #19191a;
+}
+.tab__link:hover {
+    text-decoration: none;
+    cursor: pointer;
+    color: #00A6EA;
+}
+
+.tab__logo {
+    margin-left: -2.375rem;
+}
+
+.image__header {
+    height: 1.6875rem;
+    margin-bottom: .25rem;
+}
+
+.desktop__view {
+    display: inherit;
+}
+
+.header__list li {
+    padding-left: 2.375rem;
+    list-style-type: none;
+}
+
+.section__right {
+    justify-content: flex-end;
+    flex: 1 1;
+}
+
+.basic__button {
+    text-align: center;
+    text-decoration: none;
+    white-space: nowrap;
+    vertical-align: middle;
+    cursor: pointer;
+    font-family: inherit;
+}
+.basic__button:active{
+    background-image: none;
+    outline: 0;
+}
+.basic__button:active:focus, .basic__button:focus{
+    outline: none;
+}
+.basic__button:focus,.basic__button:hover:focus{
+    text-decoration: none;
+}
+.btn__medium {
+    display: inline-flex;
+    justify-content: center;
+    font-weight: 700;
+    border-radius: 2px;
+    -moz-user-select: none;
+    padding: .375rem 1rem;
+    font-size: 1rem;
+    line-height: 1.5;
+    min-width: 8rem;
+    transition: all .1s ease-in-out;
+}
+
+.btn_purple {
+    color: #fff;
+    background-color: #00A6EA;
+    border-color: transparent;
+}
+.btn_purple:active , .btn_purple:hover{
+    box-shadow: 0 2px 4px 0 rgba(0, 0, 0, .3);
+    text-decoration: none;
+    color: #fff;
+}
+.btn_purple:active{
+    color: #e6e6e6;
+    background-color: #5000b6;
+}
+.btn_purple:focus{
+    box-shadow: 0 0 0 3px rgba(100, 0, 228, .5);
+}
+.btn_purple.btn_outline__purple {
+    color: #00A6EA;
+    background-color: transparent;
+    border: 1px solid #00A6EA;
+}
+.btn_purple.btn_outline__purple:hover{
+    background-color: rgba(100, 0, 228, .1);
+    box-shadow: none;
+}
+.btn_purple.btn_outline__purple:active {
+    background-color: rgba(100, 0, 228, .4);
+    box-shadow: none;
+}
+.register__btn {
+    padding: 0;
+}
+
+.container__main-page {
+    max-width: 90rem !important;
+    margin: auto;
+    width: 100%;
+    padding-left: 1rem;
+    padding-right: 1rem;
+    position: relative;
+}
+
+@media only screen and (min-width:48rem) {
+    .container__main-page {
+        padding-left: 1.5rem;
+        padding-right: 1.5rem
+    }
+}
+
+@media only screen and (min-width:64rem) {
+    .container__main-page {
+        padding-left: 2rem;
+        padding-right: 2rem;
+    }
+}
+
+.main__content {
+    flex-grow: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+@media only screen and (min-width:48rem) {
+    .main__content {
+        padding-top: 0;
+        padding-bottom: 0;
+    }
+}
+
+.spacer__container {
+    margin-top: 4rem;
+    margin-bottom: 4rem;
+}
+
+.pageHeading__h1 {
+    font-size: 1.8rem;
+    margin-bottom: 2rem;
+}
+.form__container{
+    max-width: 96vw;
+    width: 22rem;
+}
+.container__content-form{
+    display: flex;
+    flex-direction: column;
+    max-width: 22rem;
+}
+.flex__style{
+    display: flex;
+} 
+.col__style{
+    flex-direction: column;
+}
+.login-form__style{
+    text-align: left;
+    padding-bottom: 1rem;
+}
+.form__base{
+    display: flex;
+    -webkit-flex-direction: column;
+    flex-direction: column;
+    align-items: flex-start;
+}
+.screenRead__style{
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    -webkit-clip-path: inset(50%);
+    clip-path: inset(50%);
+    border: 0;
+}
+.form__group1{
+    width: 100%;
+}
+.form__group2 {
+    width: 100%;
+    margin-bottom: 1.5rem;
+}
+.form__group3 {
+    margin-bottom: 1rem;
+}
+.label__formGroup{
+    display: block;
+    font-weight: 700;
+    margin-bottom: .5rem;
+    line-height: 1.25rem;
+}
+.label__formGroup label{
+    font-size: .9rem !important;
+}
+.input__formGroup{
+    font-size: 1rem;
+    text-indent: .8rem;
+    padding: .8rem 0;
+    outline: none;
+    width: 100%;
+    border: 1px solid #e9eaea;
+    border-radius: 2px;
+    transition: border-color .15s;
+    font-weight: 400;
+    box-sizing: border-box;
+}
+.input__formGroup:focus {
+    border-color: #4c7ef3;
+}
+.padBottom__IfNotEmpty{
+    text-align: left;
+}
+.container__forgot{
+    position: relative;
+    width: 100%;
+}
+.forgot__style{
+    font-size: .9rem;
+    color: #2e4a99 !important;
+    margin-bottom: 1rem;
+    font-weight: 700;
+}
+.btn__lg{
+    display: inline-flex;
+    justify-content: center;
+    font-weight: 700;
+    border: 1px solid transparent;
+    border-radius: 2px;
+    -moz-user-select: none;
+    padding: .375rem 1rem;
+    font-size: 1rem;
+    line-height: 1.5;
+    min-width: 8rem;
+    transition: all .1s ease-in-out;
+}
+.btn__royalblue{
+    color: #fff;
+    background-color: #4b35ef;
+    border-color: transparent;
+}
+.btn__royalblue:active{
+    color: #e6e6e6;
+    background-color: #3c2abf;
+}
+.btn__royalblue:active ,.btn__royalblue:hover{
+    box-shadow: 0 2px 4px 0 rgba(0, 0, 0, .3);
+    text-decoration: none;
+    color: #fff;
+}
+.btn__royalblue:focus{
+    box-shadow: 0 0 0 3px rgba(75, 53, 239, .5);
+}
+.btn__xlarge{
+    padding: .75rem 1.25rem;
+    font-size: 1.25rem;
+    line-height: 1.33333;
+    min-width: 10rem;
+}
+.btn__submit{
+    margin: 1rem 0;
+    width: 100%;
+}
+button:focus{
+    outline: 1px dotted;
+    outline: 5px auto -webkit-focus-ring-color;
+}
+.heading__2{
+    font-family:MuseoSans;
+    font-weight:700;
+    font-size: 1rem;
+    margin-bottom: 1rem;
+}
+.btnContainer__social{
+    padding: 0;
+    display: flex;
+    justify-content: space-between;
+}
+.btnContainer__ListItem{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex: 1 1 auto;
+}
+.btnContainer__ListItem+ .btnContainer__ListItem{
+    margin-left: .5rem;
+}
+.btn__x-sm{
+    display: inline-flex;
+    justify-content: center;
+    font-weight: 700;
+    border: 1px solid transparent;
+    border-radius: 2px;
+    -moz-user-select: none;
+    padding: .375rem 1rem;
+    font-size: 1rem;
+    line-height: 1.5;
+    min-width: 8rem;
+    transition: all .1s ease-in-out;
+}
+.btn__red{
+    color: #fff;
+    background-color: #f65a5b;
+    border-color: transparent;
+} 
+.btn__red:focus{
+    box-shadow: 0 0 0 3px rgba(246, 90, 91, .5);
+}
+.btn__red:active{
+    color: #e6e6e6;
+    background-color: #c54849;
+}
+.btn__red:active,.btn__red:hover{
+    box-shadow: 0 2px 4px 0 rgba(0, 0, 0, .3);
+    text-decoration: none;
+    color: #fff;
+}
+.btn__social{
+    transition: box-shadow .3s;
+    margin-bottom: .5rem;
+    background-color: #fff;
+    color: #5a5b5e;
+    padding: .5rem 1rem;
+    text-align: left;
+    border: 2px solid #e9eaea;
+    display: block;
+    min-width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.btn__social:active,.btn__social:focus,.btn__social:hover{
+    border: 2px solid #e9eaea;
+    color: #5a5b5e;
+    background-color: #fff;
+    box-shadow: 0 4px 15px rgba(212, 213, 214, .6);
+}
+.icon__social{
+    transition: transform .3s ease-in;
+    transition: transform .3s ease-in;
+    width: 1.5rem;
+}
+.outLink__register{
+    text-align: right;
+    display: block;
+    color: #00A6EA;
+}
+.outLink__register:focus,
+.outLink__register:hover{
+    color: #5900cb;
+}
+.footer__page{
+    background-color: #15141f;
+    padding-top: 1.5rem;
+    padding-bottom: 1.5rem;
+    color: hsla(0, 0%, 100%, .6);
+    width: 100%;
+}
+.footer__page a{
+    color: hsla(0, 0%, 100%, .6) !important;
+}
+.footer__page li {
+    color: hsla(0, 0%, 100%, .6);
+}
+.container__styles{
+    display: flex;
+    flex-direction: column;
+}
+@media only screen and (min-width:48rem){
+    .container__styles {
+        justify-content: space-between;
+        flex-direction: row;
+    }
+    .container__styles>div {
+        margin-bottom: 0;
+    }
+    .container__styles>div:nth-of-type(2) {
+        justify-content: center;
+    }
+}
+.container__styles > div:first-of-type , .container__styles > div:last-of-type{
+    flex-basis: 25%;
+}
+.container__styles>div{
+    margin-bottom: 1.5rem;
+}
+.container__styles>div:nth-of-type(2) {
+    flex-basis: 50%;
+    display: flex;
+}
+svg:not(:root) {
+    overflow: hidden;
+}
+.linkList__styles{
+    display: flex;
+    flex-direction: column;
+    justify-self: end;
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+}
+.linkList__styles a{
+    color: #141c3a;
+}
+@media only screen and (min-width:48rem) {
+    .linkList__styles {
+        flex-direction: row;
+        align-items: center;
+    }
+    .linkList__styles>li+li{
+        margin-left: 3rem;
+    }
+}
+.social__listStyles{
+    list-style-type: none;
+    display: flex;
+    padding: 0;
+    margin: 0;
+    align-items: center;
+    height: 100%;
+}
+.social__listStyles li+li{
+    margin-left: 1.5rem;
+}
+@media only screen and (min-width:48rem) {
+    .social__listStyles {
+        justify-content: flex-end;
+    }
+}
+
+
+.upload-btn-wrapper {
+  position: relative;
+  overflow: hidden;
+  display: inline-block;
+}
+
+.btn {
+  outline: none;
+    display: block;
+    background: #E39C14;
+    width: 100%;
+    border: 0;
+    padding: 20px 30px;
+    color: #FFF;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    cursor: pointer;
+}
+
+.upload-btn-wrapper input[type=file] {
+  font-size: 100px;
+  position: absolute;
+  left: 0;
+  top: 0;
+  opacity: 0;
+}
+
+.custom-file-upload {
+ outline: none;
+    display: block;
+    background: #E39C14;
+    border: 0;
+    padding: 20px 30px;
+    color: #FFF !important;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    cursor: pointer;
+    border-radius: 2px;
+}
+
+.custom-file-upload:hover{opacity: 0.7;}
+
+.label--desc {
+    font-size: 12px;
+    color: #999;
+    margin-top: -30px;
+    /* margin-top: 10px; */
+    margin-bottom: 30px;
+}
+
+.c_header{
+    padding-bottom: 13px;
+    color: #00A6EA;
+    border-bottom: 2px solid #00A6EA;margin-bottom: 23px;}
+
+.add_stylist{outline: none;
+    display: block;
+    background: #E39C14;
+ 
+    border: 0;
+    padding: 20px 30px;
+    color: #FFF !important;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    cursor: pointer;
+    border-radius: 2px;}
+
+    .add_stylist:hover{opacity: 0.8;}
+
+
+.add_service{outline: none;
+    display: block;
+    background: #E39C14;
+ 
+    border: 0;
+    padding: 20px 30px;
+    color: #FFF !important;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    cursor: pointer;
+    border-radius: 2px;}
+
+    .add_service:hover{opacity: 0.8;}
+
+.delete_button{    cursor: pointer;
+    outline: none;
+    display: block;
+    text-decoration: none;
+    background: #00A6EA;
+    margin-top: 10px;
+    border: 0;
+    padding: 15px 20px;
+    color: #FFF !important;
+    width: 70px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    cursor: pointer;
+    border-radius: 2px;}
+
+
+select {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  -ms-appearance: none;
+  appearance: none;
+  outline: 0;
+  box-shadow: none;
+  border: 0 !important;
+  background: #fff;
+  background-image: none;
+}
+/* Remove IE arrow */
+select::-ms-expand {
+  display: none;
+}
+/* Custom Select */
+.select {
+  position: relative;
+  display: flex;
+  width: 20em;
+  height: 3em;
+  line-height: 3;
+  background: #fff;
+  overflow: hidden;
+  border-radius: .25em;
+  border: 1px solid #ddd;
+}
+select {
+  flex: 1;
+  padding: 0 .5em;
+  color: #000;
+  border: 1px solid #ddd;
+  cursor: pointer;
+}
+/* Arrow */
+.select::after {
+  content: '\25BC';
+  position: absolute;
+  top: 0;
+  right: 0;
+  padding: 0 1em;
+  background: #fff;
+  cursor: pointer;
+  pointer-events: none;
+  -webkit-transition: .25s all ease;
+  -o-transition: .25s all ease;
+  transition: .25s all ease;
+}
+/* Transition */
+.select:hover::after {
+  color: #f39c12;
+}
+
+#cat_notif{    padding-bottom: 10px;
+    font-weight: 600;
+    text-align: center;
+    color: #00A6EA;display: none;}
+
+/*
+
+
+
+.saloon_tab{height: auto !important;}
+.services_tab{height: auto !important;}
+.stylists_tab{height:auto !important;}
+*/
 </style>
-<form method="post" action="/admin/registerSalon" enctype="multipart/form-data">
-<div>
-<h3>Salon Details</h3>
-<table border=0>
-	<tr>
-		<td>Name: </td>
-		<td> <input type="text" name="salonName" required="true"> </td>
-	</tr>
-	<tr>
-		<td> PhoneNo: </td>
-		<td> <input type="number" name="salonPhoneNo" required="true"> </td>
-	</tr>
-	<tr>
-		<td> Address: </td>
-		<td>  <textarea name="address" cols="50" rows="5" required="true"></textarea> </td>
-	</tr>
-	<tr>
-		<td> Longitude: </td>
-		<td> <input type="text" name="longitude" required="true"> </td>
-	</tr>
-	<tr>
-		<td> Latitude: </td>
-		<td> <input type="text" name="latitude" required="true"> </td>
-	</tr>
-	<tr>
-		<td> number of stylists: </td>
-		<td> <input type="number" name="numberOfStylists" required="true"> </td>
-	</tr>
-	<tr>
-		<td> Photo: </td>
-		<td> <input type="file" name="salonPhoto" required="true"> </td>
-	</tr>
-</table>
-</div>
-<h3>Salon Details</h3>
-<div id="salonstylist">
-<div>
-<table border=0>
-	<tr>
-		<td> Name of stylist: </td>
-		<td> <input type="text" name="stylistName" required="true"> </td>
-	</tr>
-	<tr>
-		<td> Phone No: </td>
-		<td> <input type="number" name="stylistPhoneNo" required="true"> </td>
-	</tr>
-	<tr>
-		<td> Photo: </td>
-		<td> <input type="file" name="stylistPhoto" required="true"> </td>
-	</tr>
-</table>
-</div>
-</div>
-<p id="addnew">
-	<a href="javascript:new_stylist()">Add New Stylist </a>
-</p>
-<br>
-<h3>Service details</h3>
-<div id="servicelist">
-<div>
-<table border=0>
-	<tr>
-		<td> Service Name: </td>
-		<td> <input type="text" name="serviceName" required="true"> </td>
-	</tr>
-	<tr>
-		<td> Description: </td>
-		<td>  <textarea name="description" cols="50" rows="5" ></textarea> </td>
-	</tr>
-	<tr>
-		<td> Price: </td>
-		<td> <input type="number" name="servicePrice" required="true"> </td>
-	</tr>
-</table>
-</div>
-</div>
-<p id="addnew">
-	<a href="javascript:new_service()">Add New Service </a>
-</p>
-<table border=0>
-	<tr>
-		<td> Agent Key: </td>
-		<td> <input type="text" name="agentKey" required="true"> </td>
-	</tr>
-</table>
-<p>
-		<br>
-		<input type="submit" name="submit1" value="Register Salon">
-		<input type="reset" name="reset1">
-	</p>
 
-	
-</form>
-<!-- Template -->
-<div id="newStylistTemplate" style="display:none">
-<div>
-<table border=0>
-	<tr>
-		<td> Name of stylist: </td>
-		<td> <input type="text" name="stylistName" required="true"> </td>
-	</tr>
-	<tr>
-		<td> Phone No: </td>
-		<td> <input type="number" name="stylistPhoneNo" required="true"> </td>
-	</tr>
-	<tr>
-		<td> Photo: </td>
-		<td> <input type="file" name="stylistPhoto" required="true"> </td>
-	</tr>
-</table>
-</div>
-</div>
-<!-- Service Template-->
-<div id="newServiceTemplate" style="display:none">
-<div>
-<table border=0>
-	<tr>
-		<td> Service Name: </td>
-		<td> <input type="text" name="serviceName" required="true"> </td>
-	</tr>
-	<tr>
-		<td> Description: </td>
-		<td>  <textarea name="description" cols="50" rows="5" ></textarea> </td>
-	</tr>
-	<tr>
-		<td> Price: </td>
-		<td> <input type="number" name="servicePrice" required="true"> </td>
-	</tr>
-</table>
-</div>
+  <title></title>
+</head>
+<body>
+
+
+<div class="pagecontainer__root">
+        <header class="container__header">
+            <nav class="wrapper__header nav__appbar">
+                
+            </nav>
+        </header>
+        
+    </div>
+
+<div class='container1'>
+
+
+
+
+  <form class='modal' action="/admin/registerSalon" method="post" enctype="multipart/form-data">
+    <header class='header'>
+      <div class='card-type'>
+        <a class='card active s_tab' href='#' style="color: #fff;
+    font-weight: 600;
+    text-decoration: none;"><p>Saloon</p>
+          <i class="fas fa-cut" style="    font-size: 50px;"></i>
+          <i class="fas fa-angle-right" style="
+    /* line-height: 20px; */
+    /* margin-top: -200px; */
+    position: absolute;
+    right: 1px;
+    font-size: 30px;
+    bottom: 20px;
+    /* margin-right: 20px; */
+"></i>
+        </a>
+        <a class='card st_tab' href='#' style="color: #fff;
+    font-weight: 600;
+    text-decoration: none;"><p>Stylists</p>
+<i class="fas fa-user" style="    font-size: 50px;"></i><i class="fas fa-angle-right" style="
+    /* line-height: 20px; */
+    /* margin-top: -200px; */
+    position: absolute;
+    right: 1px;
+    font-size: 30px;
+    bottom: 20px;
+    /* margin-right: 20px; */
+"></i>        </a>
+       <a class='card se_tab' href='#' style="color: #fff;
+    font-weight: 600;
+    text-decoration: none;"><p>Services</p>
+<i class="fas fa-briefcase" style="    font-size: 50px;"></i>        </a>
+        
+      </div>
+    </header>
+    <div class='content'>
+      
+      <div class='form saloon_tab' style="height: auto !important;">
+      <div class='form-row'>
+          <div class='input-group'>
+            <label for=''>Salon name</label>
+            <input placeholder='' type='text' name="salonName" required='true'>
+          </div>
+        </div>
+        <div class='form-row'>
+          <div class='input-group'>
+            <label for=''>Address</label>
+            <textarea name="address"  required='true'></textarea>
+          </div>
+        </div>
+
+
+        <div class='form-row'>
+          <div class='input-group' style="margin-right: 20px;">
+            <label for=''>Manager Number</label>
+            <input placeholder='' maxlength='16' type='number' name="salonPhoneNo" required='true'>
+          </div>
+          <div class='input-group' style="width: 40%;">
+            <label for=''>Pincode</label>
+            <input maxlenght='4' placeholder='' type='number' name="pinCode" required='true'>
+          </div>
+        </div>
+
+  <div class='form-row'>
+          <div class='input-group' style="margin-right: 20px;">
+            <label for=''>Latitude</label>
+            <input placeholder='' name="latitude"  required='true' type='number'>
+          </div>
+          <div class='input-group'>
+            <label for=''>Longitude</label>
+            <input  placeholder='' type='number' name="longitude"  required='true'>
+          </div>
+        </div>
+
+        <div class='form-row'>
+        <label for="file-upload" class="custom-file-upload">
+    <i class="fas fa-camera"></i>  Choose Saloon Photo
+  </label>
+  <input id="file-upload" type="file" name="salonPhoto" style="display:none;">
+        </div>
+          <div class="label--desc">Upload your salon photo. Max file size 10 MB</div>
+
+ <div class='form-row'>
+          <div class='input-group'>
+            <label for=''>Number of stylists</label>
+            <input placeholder='' required="true" name="numberOfStylists" type='number'>
+          </div>
+        </div>
+ <div class='form-row'>
+          <div class='input-group'>
+            <label for=''>Agent Key</label>
+            <input placeholder=''  required='true' name="agentKey" type='text'>
+          </div>
+        </div>
+              
+<!-- Copy paste this for more days -->
+<div class="form-row">
+
+          <div class="input-group" style="margin-right: 20px;">
+            <label for="">Monday(Opening)</label>
+            <input placeholder="" name="mono" type="number" required='true'>
+          </div>
+          <div class="input-group">
+            <label for="">Monday(Closing)</label>
+            <input placeholder="" name="monc" type="number" required='true'>
+          </div>
+        </div>
+        <div class="form-row">
+
+          <div class="input-group" style="margin-right: 20px;">
+            <label for="">Tuesday(Opening)</label>
+            <input placeholder="" name="tueo" type="number" required='true'>
+          </div>
+          <div class="input-group">
+            <label for="">Tuesday(Closing)</label>
+            <input placeholder="" name="tuec" type="number" required='true'>
+          </div>
+        </div>
+        <div class="form-row">
+
+          <div class="input-group" style="margin-right: 20px;">
+            <label for="">Wednesday(Opening)</label>
+            <input placeholder="" name="wedo" type="number" required='true'>
+          </div>
+          <div class="input-group">
+            <label for="">Wednesday(Closing)</label>
+            <input placeholder="" name="wedc" type="number" required='true'>
+          </div>
+        </div>
+        <div class="form-row">
+
+          <div class="input-group" style="margin-right: 20px;">
+            <label for="">Thursday(Opening)</label>
+            <input placeholder="" name="thuro" type="number" required='true'>
+          </div>
+          <div class="input-group">
+            <label for="">Thursday(Closing)</label>
+            <input placeholder="" name="thurc" type="number" required='true'>
+          </div>
+        </div>
+        <div class="form-row">
+
+          <div class="input-group" style="margin-right: 20px;">
+            <label for="">Friday(Opening)</label>
+            <input placeholder="" name="frio" type="number" required='true'>
+          </div>
+          <div class="input-group">
+            <label for="">Friday(Closing)</label>
+            <input placeholder="" name="fric" type="number" required='true'>
+          </div>
+        </div>
+        <div class="form-row">
+
+          <div class="input-group" style="margin-right: 20px;">
+            <label for="">Saturday(Opening)</label>
+            <input placeholder="" name="sato" type="number" required='true'>
+          </div>
+          <div class="input-group">
+            <label for="">Saturday(Closing)</label>
+            <input placeholder="" name="satc" type="number" required='true'>
+          </div>
+        </div>
+        <div class="form-row">
+
+          <div class="input-group" style="margin-right: 20px;">
+            <label for="">Sunday(Opening)</label>
+            <input placeholder="" name="suno" type="number" required='true'>
+          </div>
+          <div class="input-group">
+            <label for="">Sunday(Closing)</label>
+            <input placeholder="" name="sunc" type="number" required="true">
+          </div>
+        </div>
+<!--- end --->
+      </div>
+
+
+ <div class='form stylists_tab' style="display: none;height:auto !important;">
+      <div class='form-row'>
+          <div class='input-group'>
+           <div class="element">
+   
+  </div>
+  <div id="moreImageUpload"></div>
+  <div class="clear"></div>
+  <div id="moreImageUploadLink" style="display:none;margin-left: 10px;">
+  </div>
+             <div class="add_stylist" id="attachMore"><i class="fas fa-plus"></i> Add Stylist</div><br>
+
+          </div>
+        </div>
+
+
+
+      </div>
+
+       <div class='form services_tab' style="display: none;height: auto !important"><select id="main_select" style="display: none;">
+
+</select>
+      <div class='form-row'>
+          <div class='input-group'><p id="cat_notif">Category Added</p>
+           <div class="element">
+   
+  </div>
+  <div class="cat"></div>
+  <div id="moreImageUpload2"></div>
+  <div class="clear"></div>
+  <div id="moreImageUploadLink" style="display:none;margin-left: 10px;">
+  </div> <div class="add_stylist" id="addCat"><i class="fas fa-plus"></i> Add Categories</div><br>
+             <div class="add_stylist" id="attachMore2"><i class="fas fa-plus"></i> Add Services</div><br>
+
+
+          </div>
+        </div>
+      </div>
+
+
+    </div>
+    <footer class='footer'>
+      <button class='button'>Register Salon</button>
+    </footer>
+  </form>
 </div>
 
+<script type="text/javascript">
+  $('.s_tab').on('click', function(e) {
+  e.preventDefault();
+  $('.card').removeClass('active');
+  $(this).addClass('active');
+  $('.form').stop().slideUp();
+
+  $('.saloon_tab').delay(300).slideDown();
+});
+
+$('.st_tab').on('click', function(e) {
+  e.preventDefault();
+  $('.card').removeClass('active');
+  $(this).addClass('active');
+  $('.form').stop().slideUp();
+ 
+  $('.stylists_tab').delay(300).slideDown();
+});
+
+$('.se_tab').on('click', function(e) {
+  e.preventDefault();
+  $('.card').removeClass('active');
+  $(this).addClass('active');
+  $('.form').stop().slideUp();
+ 
+  $('.services_tab').delay(300).slideDown();
+});
+
+
+$('#file-upload').change(function() {
+  var i = $(this).prev('label').clone();
+  var file = $('#file-upload')[0].files[0].name;
+  $(this).prev('label').text(file);
+});
+
+
+$('#addCat').on('click', function(e) {
+
+var add_cat = '<div class="form-row"><div class="input-group" ><label for="">Category</label><input placeholder="" type="text" id="cat_val"></div><div class="input-group"><br><a  class="delete_button" style="cursor: pointer;text-align: center;width: 50%;margin-left: 30px;margin-top:7px;" onclick="add_cat()">Add </a></div></div>';
+$('.cat').html(add_cat);
+$('.cat').show();
+});
+
+$(document).ready(function() {
+    $("input[id^='upload_file']").each(function() {
+      var id = parseInt(this.id.replace("upload_file", ""));
+      $("#upload_file" + id).change(function() {
+        if ($("#upload_file" + id).val() != "") {
+          $("#moreImageUploadLink").show();
+        }
+      });
+    });
+  });
+  
+  $(document).ready(function() {
+    var upload_number = 2;
+    $('#attachMore').click(function() {
+      //add more file
+      var moreUploadTag = '';
+      
+      
+      moreUploadTag+='<div class="input-group"><label for="">Stylist Name</label><input placeholder="" name="stylistName" required="true" type="text"><br><label for="">Phone Number</label><input placeholder="" name="stylistPhoneNo" required="true" type="number"><br></div>';
+moreUploadTag += '<div class="element"><label for="upload_file"' + upload_number + '>Stylist Photo  </label>';
+      moreUploadTag += '<input type="file" id="upload_file' + upload_number + '" name="stylistPhoto"/>';
+
+      moreUploadTag += ' <a href="javascript:del_file(' + upload_number + ')"  class="delete_button" style="cursor:pointer;" onclick="return confirm("Are you really want to delete ?")">Delete </a></div><br><hr>';
+      $('<dl id="delete_file' + upload_number + '">' + moreUploadTag + '</dl>').fadeIn('fast').appendTo('#moreImageUpload');
+      upload_number++;
+    });
+  });
+  
+
+$(document).ready(function() {
+    $("input[id^='upload2_file']").each(function() {
+      var id = parseInt(this.id.replace("upload2_file", ""));
+      $("#upload2_file" + id).change(function() {
+        if ($("#upload2_file" + id).val() != "") {
+          $("#moreImageUploadLink").show();
+        }
+      });
+    });
+  });
+  
+  $(document).ready(function() {
+    var upload_number = 2;
+    $('#attachMore2').click(function() {
+      //add more file
+      var moreUploadTag = '';
+      var cats = $("#main_select").html();
+      console.log($("#main_select").html());
+      moreUploadTag+='<div class="input-group"><label for="">Service Name</label><input placeholder="" name="serviceName" type="text" required="true"><br><label for="">Service Description</label><textarea placeholder="" name="description" type="number" required="true"></textarea><br><label for="">Price(in rupees)</label><input placeholder="" name="servicePrice" reqquired="true" type="text"><br><label for="">Category</label><div class="select"><select name="category">'+cats+'</select></div></div>';
+
+      moreUploadTag += ' <a href="javascript:del_file(' + upload_number + ')"  class="delete_button" style="cursor:pointer;" onclick="return confirm("Are you really want to delete ?")">Delete </a></div><br><hr>';
+      $('<dl id="delete_file' + upload_number + '">' + moreUploadTag + '</dl>').fadeIn('fast').appendTo('#moreImageUpload2');
+      upload_number++;
+    });
+  });
+  
+
+  function del_file(eleId) {
+    var ele = document.getElementById("delete_file" + eleId);
+    ele.parentNode.removeChild(ele);
+  }
+
+function add_cat(){
+  var cat = $("#cat_val").val();
+  $("#main_select").append(' <option value="'+cat+'">'+cat+'</option>');
+  $('.cat').hide();
+  $("#cat_notif").show().delay(500).fadeOut();
+  console.log(cat);
+}
+
+
+</script>
 </body>
 </html>
